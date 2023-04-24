@@ -1,0 +1,19 @@
+package com.vikram.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.vikram.demo.model.Student;
+
+public class ClassStudentController {
+	@Autowired
+   StudentService studsService;
+	@GetMapping("/kamal")
+   public List<Student> getAllStudents()
+   {
+	   List<Student> studsList = studsService.getAllStudents();
+	   return studsList;
+   }
+}

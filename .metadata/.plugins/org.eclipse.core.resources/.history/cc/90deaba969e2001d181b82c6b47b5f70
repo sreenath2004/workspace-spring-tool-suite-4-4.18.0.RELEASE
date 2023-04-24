@@ -1,0 +1,17 @@
+package com.vikram.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.vikram.demo.repository.StudentRepository;
+
+@Service
+public class ClassStudentService {
+	@Autowired
+	StudentRepository studsRepository;
+	public List<Student> getAllStudents(){
+		List<Student> studsList = studsRepository.findAll();
+		return studsList();
+	}
+
+}
