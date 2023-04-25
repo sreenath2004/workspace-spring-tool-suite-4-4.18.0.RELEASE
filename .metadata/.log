@@ -1040,3 +1040,2189 @@ java.lang.InterruptedException
 	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
 	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
 	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.core.jobs 4 2 2023-04-24 21:54:19.463
+!MESSAGE IJobChangeListener timeout detected. Further calls to IJobChangeListener may occur in random order and join(family) can return too soon. IJobChangeListener should return within 3000 ms. IJobChangeListener methods should not block. Possible deadlock.
+!STACK 0
+java.util.concurrent.TimeoutException: IJobChangeListener timeout detected. Further calls to IJobChangeListener may occur in random order and join(family) can return too soon. IJobChangeListener should return within 3000 ms. IJobChangeListener methods should not block. Possible deadlock.
+	at org.eclipse.core.internal.jobs.JobListeners.waitAndSendEvents(JobListeners.java:106)
+	at org.eclipse.core.internal.jobs.JobManager.startJob(JobManager.java:1752)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:244)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+!SUBENTRY 1 org.eclipse.core.jobs 4 2 2023-04-24 21:54:19.464
+!MESSAGE Thread that is running the IJobChangeListener: Worker-82: Building UI model
+	at org.eclipse.swt.internal.win32.OS.PostThreadMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.wakeThread(Display.java:5016)
+	at org.eclipse.swt.widgets.Synchronizer.addLast(Synchronizer.java:79)
+	at org.eclipse.swt.widgets.Synchronizer.asyncExec(Synchronizer.java:101)
+	at org.eclipse.ui.internal.UISynchronizer.asyncExec(UISynchronizer.java:112)
+	at org.eclipse.swt.widgets.Display.asyncExec(Display.java:775)
+	at org.eclipse.jface.util.Throttler.throttledExec(Throttler.java:96)
+	at org.eclipse.ui.internal.progress.ProgressManager.addJobInfo(ProgressManager.java:722)
+	at org.eclipse.ui.internal.progress.ProgressManager$1.updateFor(ProgressManager.java:502)
+	at org.eclipse.ui.internal.progress.ProgressManager$1.scheduled(ProgressManager.java:474)
+	at org.eclipse.core.internal.jobs.JobListeners$$Lambda$117/0x000000010024e000.notify(Unknown Source)
+	at org.eclipse.core.internal.jobs.JobListeners.sendEvent(JobListeners.java:153)
+	at org.eclipse.core.internal.jobs.JobListeners.sendEventsAsync(JobListeners.java:140)
+	at org.eclipse.core.internal.jobs.JobListeners.waitAndSendEvents(JobListeners.java:80)
+	at org.eclipse.core.internal.jobs.JobManager.withWriteLock(JobManager.java:524)
+	at org.eclipse.core.internal.jobs.JobManager.schedule(JobManager.java:1373)
+	at org.eclipse.core.internal.jobs.InternalJob.schedule(InternalJob.java:396)
+	at org.eclipse.core.runtime.jobs.Job.schedule(Job.java:684)
+	at org.springsource.ide.eclipse.commons.livexp.ui.WizardPageWithSections.scheduleUpdateJob(WizardPageWithSections.java:184)
+	at org.springsource.ide.eclipse.commons.livexp.ui.WizardPageWithSections.gotValue(WizardPageWithSections.java:155)
+	at org.springsource.ide.eclipse.commons.livexp.ui.WizardPageWithSections.gotValue(WizardPageWithSections.java:1)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.changed(LiveExpression.java:137)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.refresh(LiveExpression.java:81)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression$1.gotValue(LiveExpression.java:116)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.changed(LiveExpression.java:137)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.refresh(LiveExpression.java:81)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveVariable.setValue(LiveVariable.java:46)
+	at org.springframework.ide.eclipse.boot.wizard.InitializrFactoryModel$1.compute(InitializrFactoryModel.java:55)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.refresh(LiveExpression.java:74)
+	at org.springsource.ide.eclipse.commons.livexp.core.AsyncLiveExpression.syncRefresh(AsyncLiveExpression.java:134)
+	at org.springsource.ide.eclipse.commons.livexp.core.AsyncLiveExpression$1.run(AsyncLiveExpression.java:101)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+All thread infos: 
+"main" prio=6 Id=1 RUNNABLE (in native)
+	at org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.sleep(Display.java:4752)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:824)
+	at org.eclipse.jface.window.Window.open(Window.java:799)
+	at org.eclipse.ui.internal.actions.NewWizardShortcutAction.run(NewWizardShortcutAction.java:130)
+	at org.eclipse.jface.action.Action.runWithEvent(Action.java:474)
+	at org.eclipse.jface.action.ActionContributionItem.handleWidgetSelection(ActionContributionItem.java:580)
+	at org.eclipse.jface.action.ActionContributionItem.lambda$4(ActionContributionItem.java:414)
+	...
+
+"Reference Handler" daemon prio=10 Id=2 RUNNABLE
+	at java.base@17.0.6/java.lang.ref.Reference.waitForReferencePendingList(Native Method)
+	at java.base@17.0.6/java.lang.ref.Reference.processPendingReferences(Reference.java:253)
+	at java.base@17.0.6/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:215)
+
+"Finalizer" daemon prio=8 Id=3 WAITING on java.lang.ref.ReferenceQueue$Lock@244abe03
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@244abe03
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:176)
+	at java.base@17.0.6/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:172)
+
+"Signal Dispatcher" daemon prio=9 Id=4 RUNNABLE
+
+"Attach Listener" daemon prio=5 Id=5 RUNNABLE
+
+"Common-Cleaner" daemon prio=8 Id=21 TIMED_WAITING on java.lang.ref.ReferenceQueue$Lock@10cf8f4
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@10cf8f4
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+	at java.base@17.0.6/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+	at java.base@17.0.6/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:162)
+
+"Notification Thread" daemon prio=9 Id=22 RUNNABLE
+
+"Active Thread: Equinox Container: de577852-fdb4-4b10-89b8-671c271323c5" prio=5 Id=24 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@6649ee7b
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@6649ee7b
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	...
+
+"Framework Event Dispatcher: Equinox Container: de577852-fdb4-4b10-89b8-671c271323c5" daemon prio=5 Id=26 WAITING on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@2d5c3939
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@2d5c3939
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent(EventManager.java:400)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+"Start Level: Equinox Container: de577852-fdb4-4b10-89b8-671c271323c5" daemon prio=5 Id=27 WAITING on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@5c173037
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@5c173037
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent(EventManager.java:400)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+"SCR Component Actor" daemon prio=5 Id=28 WAITING on java.util.LinkedList@3abaa819
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.util.LinkedList@3abaa819
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.apache.felix.scr.impl.ComponentActorThread.run(ComponentActorThread.java:83)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+"EMF Reference Cleaner" daemon prio=5 Id=30 WAITING on java.lang.ref.ReferenceQueue$Lock@13a9a303
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@13a9a303
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:176)
+	at org.eclipse.emf.common.util.CommonUtil$1ReferenceClearingQueuePollingThread.run(CommonUtil.java:70)
+
+"Worker-JM" prio=5 Id=33 WAITING on java.util.ArrayList@5f70c5be
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.util.ArrayList@5f70c5be
+	at org.eclipse.core.internal.jobs.InternalWorker.run(InternalWorker.java:61)
+
+"Gogo shell" prio=5 Id=35 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3a03d0ef
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3a03d0ef
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	...
+
+"BC Entropy Daemon" daemon prio=6 Id=39 TIMED_WAITING
+	at java.base@17.0.6/java.lang.Thread.sleep(Native Method)
+	at org.bouncycastle.jcajce.provider.drbg.DRBG$EntropyDaemon.run(Unknown Source)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+"Git Repository Closer" daemon prio=6 Id=40 WAITING on java.lang.ref.ReferenceQueue$Lock@55165dd6
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@55165dd6
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:176)
+	at org.eclipse.egit.core.RepositoryCache$Closer.run(RepositoryCache.java:453)
+
+"Bundle File Closer" daemon prio=6 Id=41 WAITING on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@bf95dcc
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@bf95dcc
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent(EventManager.java:400)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+"Java indexing" daemon prio=4 Id=44 WAITING on org.eclipse.jdt.internal.core.search.indexing.IndexManager@527d3438
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jdt.internal.core.search.indexing.IndexManager@527d3438
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop(JobManager.java:488)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager$$Lambda$486/0x00000001006c9b10.run(Unknown Source)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+"JNA Cleaner" daemon prio=6 Id=45 WAITING on java.lang.ref.ReferenceQueue$Lock@765d0230
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@765d0230
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:176)
+	at com.sun.jna.internal.Cleaner$1.run(Cleaner.java:58)
+
+"org.eclipse.tm4e.ui.internal.model.TMDocumentModel" daemon prio=1 Id=54 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@114219c0
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@114219c0
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.PriorityBlockingQueue.take(PriorityBlockingQueue.java:535)
+	at org.eclipse.tm4e.core.model.TMModel$TokenizerThread.run(TMModel.java:93)
+
+"org.eclipse.lsp4e.operations.semanticTokens.SemanticHighlightReconciler" daemon prio=1 Id=48 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@50942119
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@50942119
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.jface.text.codemining.CodeMiningReconciler" daemon prio=1 Id=49 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@6b7303c7
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@6b7303c7
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.lsp4e.operations.linkedediting.LinkedEditingReconciler" daemon prio=1 Id=50 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@75a1c01b
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@75a1c01b
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.lsp4e.operations.documentLink.LSPDocumentLinkPresentationReconciler" daemon prio=1 Id=51 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@74ac4b76
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@74ac4b76
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.lsp4e.operations.highlight.HighlightReconciler" daemon prio=1 Id=52 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@5c13013
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@5c13013
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.lsp4e.operations.folding.LSPFoldingReconciler" daemon prio=1 Id=53 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@765f7657
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@765f7657
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"Consume LS error stream" daemon prio=6 Id=56 RUNNABLE (in native)
+	at java.base@17.0.6/java.io.FileInputStream.readBytes(Native Method)
+	at java.base@17.0.6/java.io.FileInputStream.read(FileInputStream.java:254)
+	at org.springsource.ide.eclipse.commons.core.util.IOUtil.consume(IOUtil.java:26)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageServerProcessStreamConnector$1.run(STS4LanguageServerProcessStreamConnector.java:66)
+
+"LS-org.eclipse.languageserver.languages.springboot@vikram#listener-0" prio=5 Id=57 RUNNABLE (in native)
+	at java.base@17.0.6/java.io.FileInputStream.readBytes(Native Method)
+	at java.base@17.0.6/java.io.FileInputStream.read(FileInputStream.java:276)
+	at java.base@17.0.6/java.io.BufferedInputStream.fill(BufferedInputStream.java:244)
+	at java.base@17.0.6/java.io.BufferedInputStream.read(BufferedInputStream.java:263)
+	-  locked java.io.BufferedInputStream@d05c19f
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:79)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.base@17.0.6/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base@17.0.6/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	...
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@36b39bb3
+
+"EventAdmin Async Event Dispatcher Thread" daemon prio=6 Id=58 WAITING on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@17292675
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.osgi.framework.eventmgr.EventManager$EventThread@17292675
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent(EventManager.java:400)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+"pool-4-thread-1" prio=5 Id=73 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1a490709
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1a490709
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	...
+
+"pool-5-thread-1" prio=5 Id=74 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@39e324e6
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@39e324e6
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	...
+
+"Thread-11" prio=6 Id=78 TIMED_WAITING
+	at java.base@17.0.6/java.lang.Thread.sleep(Native Method)
+	at org.eclipse.linuxtools.internal.docker.core.DockerContainerRefreshManager$ContainerRefreshThread.run(DockerContainerRefreshManager.java:152)
+
+"LS-org.eclipse.languageserver.languages.springboot@vikram#dispatcher" prio=5 Id=88 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@45f6e24
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@45f6e24
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	...
+
+"org.eclipse.lsp4e.outline.LSSymbolsContentProvider$ReconcilerOutlineUpdater" daemon prio=1 Id=89 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@5a1bea54
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@5a1bea54
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"Thread-13" prio=5 Id=92 TIMED_WAITING
+	at java.base@17.0.6/java.lang.Thread.sleep(Native Method)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker$UpdateCheckThread.run(UpdateChecker.java:73)
+
+"pool-6-thread-1" prio=5 Id=94 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@8b8cf51
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@8b8cf51
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	...
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=466 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@285c1eb4
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@285c1eb4
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=533 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@570d7bd5
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@570d7bd5
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=985 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@5241722a
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@5241722a
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=1000 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@1c4dfd74
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@1c4dfd74
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=1200 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@542cf9f7
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@542cf9f7
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=1206 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@68c3f374
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@68c3f374
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"Worker-54: Process Console Input Job" prio=5 Id=1396 WAITING on org.eclipse.ui.console.IOConsoleInputStream@314a0c64
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.ui.console.IOConsoleInputStream@314a0c64
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.ui.console.IOConsoleInputStream.waitForData(IOConsoleInputStream.java:141)
+	at org.eclipse.ui.console.IOConsoleInputStream.read(IOConsoleInputStream.java:92)
+	at org.eclipse.ui.console.IOConsoleInputStream.read(IOConsoleInputStream.java:114)
+	at org.eclipse.debug.internal.ui.views.console.ProcessConsole$InputReadJob.run(ProcessConsole.java:908)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+"Output Stream Monitor for PID 4888 vikram - VikramApplication" daemon prio=1 Id=1402 RUNNABLE (in native)
+	at java.base@17.0.6/java.io.FileInputStream.readBytes(Native Method)
+	at java.base@17.0.6/java.io.FileInputStream.read(FileInputStream.java:276)
+	at java.base@17.0.6/java.io.BufferedInputStream.read1(BufferedInputStream.java:282)
+	at java.base@17.0.6/java.io.BufferedInputStream.read(BufferedInputStream.java:343)
+	-  locked java.io.BufferedInputStream@421ff164
+	at java.base@17.0.6/java.io.FilterInputStream.read(FilterInputStream.java:106)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.internalRead(OutputStreamMonitor.java:249)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:225)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$$Lambda$2160/0x0000000100181800.run(Unknown Source)
+	...
+
+"Error Stream Monitor for PID 4888 vikram - VikramApplication" daemon prio=1 Id=1403 RUNNABLE (in native)
+	at java.base@17.0.6/java.io.FileInputStream.readBytes(Native Method)
+	at java.base@17.0.6/java.io.FileInputStream.read(FileInputStream.java:276)
+	at java.base@17.0.6/java.io.BufferedInputStream.read1(BufferedInputStream.java:282)
+	at java.base@17.0.6/java.io.BufferedInputStream.read(BufferedInputStream.java:343)
+	-  locked java.io.BufferedInputStream@71cf4b91
+	at java.base@17.0.6/java.io.FilterInputStream.read(FilterInputStream.java:106)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.internalRead(OutputStreamMonitor.java:249)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor.read(OutputStreamMonitor.java:225)
+	at org.eclipse.debug.internal.core.OutputStreamMonitor$$Lambda$2160/0x0000000100181800.run(Unknown Source)
+	...
+
+"Input Stream Monitor for PID 4888 vikram - VikramApplication" daemon prio=5 Id=1404 WAITING on java.lang.Object@6e05e8f
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.Object@6e05e8f
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:338)
+	at org.eclipse.debug.internal.core.InputStreamMonitor.writeNext(InputStreamMonitor.java:199)
+	at org.eclipse.debug.internal.core.InputStreamMonitor.write(InputStreamMonitor.java:169)
+	at org.eclipse.debug.internal.core.InputStreamMonitor$$Lambda$2161/0x0000000100181a20.run(Unknown Source)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+"Process monitor for PID 4888 vikram - VikramApplication" daemon prio=5 Id=1405 RUNNABLE (in native)
+	at java.base@17.0.6/java.lang.ProcessImpl.waitForInterruptibly(Native Method)
+	at java.base@17.0.6/java.lang.ProcessImpl.waitFor(ProcessImpl.java:566)
+	at org.eclipse.debug.core.model.RuntimeProcess$ProcessMonitorThread.run(RuntimeProcess.java:496)
+
+"RMI Scheduler(0)" daemon prio=5 Id=1406 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@67a84b1b
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@67a84b1b
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	...
+
+"RMI RenewClean-[localhost:50077]" daemon prio=5 Id=1407 TIMED_WAITING on java.lang.ref.ReferenceQueue$Lock@5a01125b
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@5a01125b
+	at java.base@17.0.6/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+	at java.rmi@17.0.6/sun.rmi.transport.DGCClient$EndpointEntry$RenewCleanThread.run(DGCClient.java:559)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+"RMI GC Daemon" daemon prio=2 Id=1408 TIMED_WAITING on sun.rmi.transport.GC$LatencyLock@51195949
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on sun.rmi.transport.GC$LatencyLock@51195949
+	at java.rmi@17.0.6/sun.rmi.transport.GC$Daemon.run(GC.java:127)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+	at java.base@17.0.6/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:162)
+
+"JMX client heartbeat 2" daemon prio=5 Id=1409 TIMED_WAITING
+	at java.base@17.0.6/java.lang.Thread.sleep(Native Method)
+	at java.management@17.0.6/com.sun.jmx.remote.internal.ClientCommunicatorAdmin$Checker.run(ClientCommunicatorAdmin.java:180)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+"org.eclipse.jdt.internal.ui.text.JavaReconciler" daemon prio=1 Id=1435 TIMED_WAITING on org.eclipse.jface.text.reconciler.DirtyRegionQueue@558961c3
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.jface.text.reconciler.DirtyRegionQueue@558961c3
+	at org.eclipse.jface.text.reconciler.AbstractReconciler.delay(AbstractReconciler.java:572)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:181)
+
+"Worker-77" prio=5 Id=2053 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"Worker-78" prio=5 Id=2054 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"ForkJoinPool.commonPool-worker-119" daemon prio=5 Id=2058 TIMED_WAITING on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkUntil(LockSupport.java:410)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1726)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+"ForkJoinPool.commonPool-worker-121" daemon prio=5 Id=2060 TIMED_WAITING on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkUntil(LockSupport.java:410)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1726)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+"ForkJoinPool.commonPool-worker-122" daemon prio=5 Id=2061 TIMED_WAITING on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkUntil(LockSupport.java:410)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1726)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+"ForkJoinPool.commonPool-worker-123" daemon prio=5 Id=2062 TIMED_WAITING on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkUntil(LockSupport.java:410)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1726)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+"ForkJoinPool.commonPool-worker-124" daemon prio=5 Id=2063 TIMED_WAITING on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkUntil(LockSupport.java:410)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1726)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+"ForkJoinPool.commonPool-worker-125" daemon prio=5 Id=2064 TIMED_WAITING on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.ForkJoinPool@229d4f70
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkUntil(LockSupport.java:410)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.awaitWork(ForkJoinPool.java:1726)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+"Worker-80" prio=5 Id=2069 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2072 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@39d5997b
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@27cc60fb
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2073 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@3747a730
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@3747a730
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@7f2bfc1c
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2075 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7fe98867
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7fe98867
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Worker-81" prio=5 Id=2077 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"Worker-82: Building UI model" prio=5 Id=2078 RUNNABLE (in native)
+	at org.eclipse.swt.internal.win32.OS.PostThreadMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.wakeThread(Display.java:5016)
+	at org.eclipse.swt.widgets.Synchronizer.addLast(Synchronizer.java:79)
+	at org.eclipse.swt.widgets.Synchronizer.asyncExec(Synchronizer.java:101)
+	at org.eclipse.ui.internal.UISynchronizer.asyncExec(UISynchronizer.java:112)
+	at org.eclipse.swt.widgets.Display.asyncExec(Display.java:775)
+	-  locked java.lang.Class@46f902e0
+	at org.eclipse.jface.util.Throttler.throttledExec(Throttler.java:96)
+	at org.eclipse.ui.internal.progress.ProgressManager.addJobInfo(ProgressManager.java:722)
+	...
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2419ea75
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2080 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1780f421
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@6bdb89a9
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2081 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@284082b3
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@284082b3
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@1603bb31
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2082 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@43e19f8c
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@43e19f8c
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Worker-83" prio=5 Id=2088 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2089 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@53d04a2d
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@6471173f
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2090 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@48885418
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@48885418
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@36e60319
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2091 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7daaf7a
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7daaf7a
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2093 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@568a1c8e
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3aae318f
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2094 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@300c9a56
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@300c9a56
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@67a68bb9
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2095 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@62ff4252
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@62ff4252
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2096 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@64974cef
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2f7e2bbb
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2097 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@7bf4ca28
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@7bf4ca28
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@10efdbef
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2098 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@6381ead6
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@6381ead6
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2099 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3daf227d
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@63d2e580
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2100 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@3e2ad658
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@3e2ad658
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@2c556f33
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2101 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@52914c11
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@52914c11
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2102 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@16e920f4
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@6263394c
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2103 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@a13bb4e
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@a13bb4e
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@6ece240e
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2104 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@52ba9fd9
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@52ba9fd9
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2105 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@d0bebfa
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@76d90a4e
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2106 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@61071610
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@61071610
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@7486039f
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2107 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@674519be
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@674519be
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2108 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@35c36a97
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@b769d1b
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2109 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@5218bdf3
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@5218bdf3
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@2dc30127
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2110 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1d5fc6e7
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1d5fc6e7
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2111 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@33e68009
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@cc75d2b
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2112 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@1b279e65
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@1b279e65
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@55cae61b
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2113 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@78ac1b18
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@78ac1b18
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2114 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@7f4d3acc
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@49d51e0b
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2115 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@6ea665e2
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@6ea665e2
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@47c93fa4
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2116 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@76cac7f5
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@76cac7f5
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2117 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@604708ba
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@10367ff
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2118 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@5cd79b48
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@5cd79b48
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@703a3e10
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2119 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7c020a48
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7c020a48
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Worker-84" prio=5 Id=2122 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2123 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2458dfaa
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3e7e7841
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2124 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@5e93a91d
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@5e93a91d
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@7e0a0b06
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2125 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@32afa8cd
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@32afa8cd
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2126 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@50e894bd
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1d995291
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2127 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@5e01db7e
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@5e01db7e
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@49c74081
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2128 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1127e9b3
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1127e9b3
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2129 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@57eda56
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@52240db2
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2130 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@22ef6a3
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@22ef6a3
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@59165136
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2131 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@2c6afd24
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@2c6afd24
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Worker-85" prio=5 Id=2132 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2133 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@5f352e95
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2d0ef15c
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2134 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@586081b0
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@586081b0
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@4d05274d
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2135 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@2318c445
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@2318c445
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2136 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@55af0735
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@f7188cd
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2137 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@53c0f592
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@53c0f592
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@6815da5d
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2138 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@361f2943
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@361f2943
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2139 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1b24061a
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1810d253
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2140 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@4c28d8a6
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@4c28d8a6
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@20caab1b
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2141 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@332b551
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@332b551
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Worker-86" prio=5 Id=2142 RUNNABLE
+	at java.management@17.0.6/sun.management.ThreadImpl.dumpThreads0(Native Method)
+	at java.management@17.0.6/sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:521)
+	at java.management@17.0.6/sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:509)
+	at org.eclipse.core.internal.jobs.JobListeners.waitAndSendEvents(JobListeners.java:120)
+	at org.eclipse.core.internal.jobs.JobManager.startJob(JobManager.java:1752)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:244)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2143 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@381d77fb
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2601b8e1
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2144 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@2ce6a96f
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@2ce6a96f
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@792b310c
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2148 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3ae8199f
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3ae8199f
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"JGit-WorkQueue" daemon prio=5 Id=2149 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@69991396
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@69991396
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2151 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@42f478f4
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@5bc00c14
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2152 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@219ed212
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@219ed212
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@6092a42
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2153 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@ba6014
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@ba6014
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2154 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@61689b2f
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3a139bba
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2155 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@6d4ac0a8
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@6d4ac0a8
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@58876755
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2156 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3ea3a7d5
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3ea3a7d5
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2157 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1b37e2cd
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3ddf745a
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2158 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@62bacc9
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@62bacc9
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@34df709a
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2159 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@25153ed6
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@25153ed6
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Worker-87" prio=5 Id=2160 TIMED_WAITING on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on org.eclipse.core.internal.jobs.WorkerPool@70dc18fa
+	at org.eclipse.core.internal.jobs.WorkerPool.sleep(WorkerPool.java:200)
+	at org.eclipse.core.internal.jobs.WorkerPool.startJob(WorkerPool.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2164 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1108133
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@472b48ef
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2165 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@1c3df927
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@1c3df927
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@3bb8fbab
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2166 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@10d287f8
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@10d287f8
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2167 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@15ce95c8
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@83fdbae
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2168 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@7bb8ef4f
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@7bb8ef4f
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@2fd35013
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2169 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7f514a87
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7f514a87
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2170 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1ed0f070
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@68c4aaaf
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2171 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@54baf26f
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@54baf26f
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@5c809083
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2172 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@214a9f0d
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@214a9f0d
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2173 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3800b824
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@75dcfc59
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2174 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@76f65107
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@76f65107
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@3d9091e7
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2175 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3311a23
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3311a23
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2176 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3ecd43f9
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2c614e4d
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2177 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@68db4caf
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@68db4caf
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@fab1f2a
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2178 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@63b0a395
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@63b0a395
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2179 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3736e691
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1183c51c
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2180 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@238f4db7
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@238f4db7
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@e1a0a5f
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2181 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@4545fe58
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@4545fe58
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2182 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@45478a0f
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@4ae31c9e
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2183 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@13d81280
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@13d81280
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@32cd52fe
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2184 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7985999d
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@7985999d
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2185 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@6b6350
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@52be882f
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2186 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@121ccea
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@121ccea
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@3ee29378
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2187 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@54bdf422
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@54bdf422
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2188 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@f977c06
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@294e622b
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2189 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@2607ad74
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@2607ad74
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@41966dbb
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2190 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1d204172
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1d204172
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2191 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2963699c
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@73e619a1
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2192 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@681176a4
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@681176a4
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@2a5e7895
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2193 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@77a59105
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@77a59105
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2194 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@453839e4
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@6501bf3
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2195 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@6597f9cb
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@6597f9cb
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@6548bd53
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2196 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3ee171c5
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3ee171c5
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2197 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3a1288e4
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@3c9b93d6
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2198 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@66987c2f
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@66987c2f
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@56f9c85d
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2199 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@53425660
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@53425660
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2200 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@7d39a144
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1d5c8816
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2201 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@3800f696
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@3800f696
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@6e2fd9dd
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2202 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@79b056a0
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@79b056a0
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2203 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@4933eb53
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@30d6d65b
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2204 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@f5d2291
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@f5d2291
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@2d7287cb
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2205 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@74a3708c
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@74a3708c
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2206 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@229c7438
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@247e0a3e
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2207 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@42d1ed8a
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@42d1ed8a
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@19b1e2f8
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2208 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@2d19c24c
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@2d19c24c
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2209 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@6c654e63
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@389e962b
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2210 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@756e810f
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@756e810f
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@1d789dbd
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2211 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1686364c
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1686364c
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"OkHttp repo.maven.apache.org" prio=5 Id=2212 RUNNABLE (in native)
+	at java.base@17.0.6/sun.nio.ch.Net.poll(Native Method)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:181)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:190)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:314)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+	at java.base@17.0.6/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+	at java.base@17.0.6/java.net.Socket$SocketInputStream.read(Socket.java:966)
+	at java.base@17.0.6/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:484)
+	...
+
+	Number of locked synchronizers = 2
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@50d674a9
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1cb59f56
+
+"OkHttp ConnectionPool" daemon prio=5 Id=2213 TIMED_WAITING on okhttp3.internal.connection.RealConnectionPool@1d520336
+	at java.base@17.0.6/java.lang.Object.wait(Native Method)
+	-  waiting on okhttp3.internal.connection.RealConnectionPool@1d520336
+	at java.base@17.0.6/java.lang.Object.wait(Object.java:472)
+	at okhttp3.internal.connection.RealConnectionPool.lambda$new$0(RealConnectionPool.java:62)
+	at okhttp3.internal.connection.RealConnectionPool$$Lambda$2354/0x000000010141a688.run(Unknown Source)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base@17.0.6/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@3991212
+
+"OkHttp repo.maven.apache.org Writer" prio=5 Id=2214 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3a417286
+	at java.base@17.0.6/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@3a417286
+	at java.base@17.0.6/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+	at java.base@17.0.6/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+	at java.base@17.0.6/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+	at java.base@17.0.6/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+	...
+
+"Keep-Alive-Timer" daemon prio=8 Id=2224 TIMED_WAITING
+	at java.base@17.0.6/java.lang.Thread.sleep(Native Method)
+	at java.base@17.0.6/sun.net.www.http.KeepAliveCache.run(KeepAliveCache.java:243)
+	at java.base@17.0.6/java.lang.Thread.run(Thread.java:833)
+	at java.base@17.0.6/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:162)
+
+
+
+!ENTRY org.eclipse.lsp4e 2 0 2023-04-24 22:19:08.727
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 2 0 2023-04-24 23:22:16.428
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 2 0 2023-04-24 23:31:57.659
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 2 0 2023-04-25 10:58:26.851
+!MESSAGE Timeout waiting for data to generate LS hover
+!STACK 0
+java.util.concurrent.TimeoutException
+	at java.base/java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1960)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2095)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
