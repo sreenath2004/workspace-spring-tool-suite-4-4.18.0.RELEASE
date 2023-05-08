@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.review2.demo.model.Football;
 import com.review2.demo.repository.FootballRepository;
+
+import jakarta.transaction.Transactional;
  
 
 
@@ -69,23 +71,22 @@ public List<Football> paginate(int num, int size, String name)
 	{
 		return mesRepository.findByCountry(country);
 	}
-	public String loginCheckData(String username,String password)
+	public List<Football> getPlayerByCountry(String country,String name)
+	  {
+		  return mesRepository.getPlayerByCountry(country,name);
+	  }
+	@Transactional 
+	public int deletePlayerByName(String name)
 	{
-		Football user = mesRepository.findByusername(username);
-		if(user == null)
-		{
-			return "No User Found Please Try Again!!!!";
-		}
-		else
-		{
-			if(user.getPassword().equals(password))
-			{
-				return "Login Successful";
-			}
-			else
-			{
-				return "Login Failed";
-			}
-		}
+   	return mesRepository.deletePlayerByName(name);
+	}
+	@Transactional
+	public int updatePlayerByName(String country,String name)
+	{
+		return mesRepository.updatePlayerByName(country, name);
+	}
+	public List<Football> fetchPlayerByCount(String country)
+	{
+		return mesRepository.fetchPlayerByCount(country);
 	}
 }
